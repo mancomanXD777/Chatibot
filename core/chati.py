@@ -1,15 +1,25 @@
+import json
 class Chati:
 
     def __init__(self, configuracion):
-        self.memoria = configuracion.get("memoria", {})
+        self.idioma = configuracion.get("idioma", "es")
         self.nombre = configuracion.get("nombre", "Sin nombre")
         self.personalidad = configuracion.get("personalidad", "Normal")
         self.version = configuracion.get("version", "0.0.0")
+
+       #Memoria de chati
+        self.memoria = {}
+        self.cargar_memoria()
+
 
     def presentarse(self):
         print(f"Hola, soy {self.nombre}")
         print(f"Mi personalidad es {self.personalidad}")
         print(f"Estoy usando la versión {self.version}")
+
+    def cargar_memoria(self):
+        with open("data/memoria.json", "r", encoding="utf-8") as archivo:
+            self.memoria = json.load(archivo)
 
     def responder(self, mensaje):
         mensaje = mensaje.lower()
@@ -17,19 +27,22 @@ class Chati:
         if mensaje == "hola":
             return "Hola, un gusto conocerte"
 
+        elif "como me llamo" in mensaje:
+            nombre = self.memoria.get("jugador", "todavía no lo sé")
+            return f"Te llamas {nombre}"
+
         elif "me llamo" in mensaje:
             nombre = mensaje.replace("me llamo ", "")
             self.memoria["jugador"] = nombre
+            self.guardar_memoria()
 
             return f"Un gusto conocerte {nombre}"
 
         elif "como estas" in mensaje:
             return "Funcionando correctamente"
-
-        elif "como me llamo" in mensaje:
-            nombre = self.memoria.get("jugador", "todavía no lo sé")
-
-            return f"Te llamas {nombre}"
-
         else:
             return "No entendí lo que dijiste"
+
+    def guardar_memoria(self):
+        with open("data/memoria.json", "w", encoding="utf-8") as archivo:
+            json.dump(self.memoria, archivo, ensure_ascii=False, indent=4)
