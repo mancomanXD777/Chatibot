@@ -33,3 +33,14 @@ print(f"Personalidad: {configuracion.get('personalidad', 'Normal')}")
 bot = Chati(configuracion)
 
 bot.presentarse()
+
+while True:
+    mensaje = input("Tú: ")
+
+    if mensaje == "salir":
+        print("Chati: Hasta luego")
+        break
+
+    respuesta = bot.responder(mensaje)
+
+    print("Chati:", respuesta)
