@@ -18,8 +18,11 @@ class Chati:
         print(f"Estoy usando la versión {self.version}")
 
     def cargar_memoria(self):
-        with open("data/memoria.json", "r", encoding="utf-8") as archivo:
-            self.memoria = json.load(archivo)
+        try:
+            with open("data/memoria.json", "r", encoding="utf-8") as archivo:
+                self.memoria = json.load(archivo)
+        except FileNotFoundError:
+            self.memoria = {}
 
     def responder(self, mensaje):
         mensaje = mensaje.lower()
