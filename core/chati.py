@@ -24,6 +24,28 @@ class Chati:
         except FileNotFoundError:
             self.memoria = {}
 
+    def crear_jugador(self, nombre):
+
+        # Si no existe la lista de jugadores, la creamos
+        if "jugadores" not in self.memoria:
+            self.memoria["jugadores"] = {}
+
+        # Si el jugador ya existe, terminamos la función
+        if nombre in self.memoria["jugadores"]:
+            return f"El jugador {nombre} ya existe en la memoria."
+
+        # Si llegamos hasta aquí, significa que es un jugador nuevo
+        self.memoria["jugadores"][nombre] = {
+            "nombre": nombre,
+            "ultima_conexion": "",
+            "historial": []
+        }
+
+        self.guardar_memoria()
+
+        return f"Jugador {nombre} creado correctamente."
+
+
     def responder(self, mensaje):
         mensaje = mensaje.lower()
 
