@@ -39,7 +39,9 @@ class Chati:
         self.memoria["jugadores"][nombre] = {
             "nombre": nombre,
             "ultima_conexion": "",
-            "historial": []
+            "historial": [],
+            "favorito": {},
+            "datos": {}
         }
 
         self.guardar_memoria()
@@ -72,8 +74,67 @@ class Chati:
 
         elif "como estas" in mensaje:
             respuesta = "Funcionando correctamente"
+
+        elif "que fue lo ultimo que te dije" in mensaje:
+            historial = self.obtener_historial()
+            if historial:
+                ultima_interaccion = historial[-1]
+                respuesta = f"Lo último que me dijiste fue: '{ultima_interaccion['mensaje']}'"
+            else:
+                respuesta = "No tengo un historial de interacciones contigo."
+
+        elif "que fue lo primero que te dije" in mensaje:
+            historial = self.obtener_historial()
+            if historial:
+                primera_interaccion = historial[0]
+                respuesta = f"Lo primero que me dijiste fue: '{primera_interaccion['mensaje']}'"
+            else:
+                respuesta = "No tengo un historial de interacciones contigo."
+
+        elif "me gusta" in mensaje:
+            dato = mensaje.replace("me gusta ", "").strip()
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                jugador["datos"]["gustos"] = dato
+                self.guardar_memoria()
+                respuesta = f"¡Genial! He guardado que te gusta {dato}."
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo guardar tus gustos."
+
+        elif "favorito es" in mensaje:
+            favorito = mensaje.replace("favorito es ", "").strip()
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                jugador["favorito"]["general"] = favorito
+                self.guardar_memoria()
+                respuesta = f"¡Genial! He guardado que tu favorito es {favorito}."
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo guardar tu favorito."
+
+        elif "me" in mensaje and ("gusta?" in mensaje or "gustan?" in mensaje):
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                gustos = jugador["datos"].get("gustos", "No has compartido tus gustos conmigo.")
+                respuesta = f"Me dijiste que te gusta: {gustos}"
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo recordar tus gustos."
+
+        elif "mi" in mensaje and "favorito?" in mensaje:
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                favorito = jugador["favorito"].get("general", "No has compartido tu favorito conmigo.")
+                respuesta = f"Me dijiste que tu favorito es: {favorito}"
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo recordar tu favorito."
+
+
         else:
             respuesta = "No entendí lo que dijiste"
+        
         self.guardar_historial(mensaje, respuesta)
         return respuesta
     
@@ -95,6 +156,35 @@ class Chati:
             if jugador:
                 jugador["historial"].append({
                     "mensaje": mensaje,
-                    "respuesta": respuesta
+                    "respuesta": respuesta,
                 })
                 self.guardar_memoria()
+
+    def obtener_historial(self):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                return jugador["historial"]
+        return []
+
+    def obtener_datos(self):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                return jugador["datos"]
+        return {}
+
+    def obtener_favorito(self):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                return jugador["favorito"]
+        return None
+
+    def obtener_jugador_actual(self):
+        if self.jugador_actual:
+            return self.memoria.get("jugadores", {}).get(self.jugador_actual)
+        return None
