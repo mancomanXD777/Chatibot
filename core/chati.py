@@ -4,6 +4,7 @@ class Chati:
     def __init__(self, configuracion):
         self.idioma = configuracion.get("idioma", "es")
         self.nombre = configuracion.get("nombre", "Sin nombre")
+        self.jugador_actual = None
         self.personalidad = configuracion.get("personalidad", "Normal")
         self.version = configuracion.get("version", "0.0.0")
 
@@ -48,26 +49,52 @@ class Chati:
 
     def responder(self, mensaje):
         mensaje = mensaje.lower()
+        respuesta = ""
 
-        if mensaje == "hola":
-            return "Hola, un gusto conocerte"
+        if "hola" in mensaje:
+            respuesta = "Hola, un gusto conocerte"
 
         elif "como me llamo" in mensaje:
-            nombre = self.memoria.get("jugador", "todavía no lo sé")
-            return f"Te llamas {nombre}"
+            if self.jugador_actual:
+                jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+                if jugador:
+                    respuesta = f"Tu nombre es {jugador['nombre']}"
+                else:
+                    respuesta = "Todavía no sé tu nombre"
+            else:
+                respuesta = "Todavía no sé tu nombre"
 
         elif "me llamo" in mensaje:
             nombre = mensaje.replace("me llamo ", "")
-            self.memoria["jugador"] = nombre
-            self.guardar_memoria()
-
-            return f"Un gusto conocerte {nombre}"
+            self.crear_jugador(nombre)
+            respuesta = self.establecer_jugador_actual(nombre)
 
         elif "como estas" in mensaje:
-            return "Funcionando correctamente"
+            respuesta = "Funcionando correctamente"
         else:
-            return "No entendí lo que dijiste"
-
+            respuesta = "No entendí lo que dijiste"
+        self.guardar_historial(mensaje, respuesta)
+        return respuesta
+    
     def guardar_memoria(self):
         with open("data/memoria.json", "w", encoding="utf-8") as archivo:
             json.dump(self.memoria, archivo, ensure_ascii=False, indent=4)
+
+    def establecer_jugador_actual(self, nombre):
+        if nombre in self.memoria.get("jugadores", {}):
+            self.jugador_actual = nombre
+            return f"Jugador actual establecido a {nombre}"
+        else:
+            return f"No se encontró el jugador {nombre} en la memoria."
+
+    def guardar_historial(self, mensaje, respuesta):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                jugador["historial"].append({
+                    "mensaje": mensaje,
+                    "respuesta": respuesta
+                })
+                self.guardar_memoria()
