@@ -1,28 +1,5 @@
 {
     "jugadores": {
-        "esteban": {
-            "nombre": "esteban",
-            "ultima_conexion": "",
-            "historial": [
-                {
-                    "mensaje": "me llamo esteban",
-                    "respuesta": "Jugador actual establecido a esteban"
-                },
-                {
-                    "mensaje": "me gusta el color verde",
-                    "respuesta": "¡Genial! He guardado que te gusta el color verde."
-                },
-                {
-                    "mensaje": "mi color favorito es el rojo",
-                    "respuesta": "¡Genial! He guardado que tu favorito es mi color el rojo."
-                }
-            ],
-            "favorito": {
-                "general": "mi color el rojo"
-            },
-            "datos": {
-                "gustos": "el color verde"
-            }
-        }
+        
     }
 }

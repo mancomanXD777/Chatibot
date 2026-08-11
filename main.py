@@ -38,6 +38,7 @@ while True:
     mensaje = input("Tú: ")
 
     if mensaje == "salir":
+        bot.registrar_desconexion()
         print("Chati: Hasta luego")
         break
 

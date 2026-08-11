@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 class Chati:
 
     def __init__(self, configuracion):
@@ -38,7 +39,7 @@ class Chati:
         # Si llegamos hasta aquí, significa que es un jugador nuevo
         self.memoria["jugadores"][nombre] = {
             "nombre": nombre,
-            "ultima_conexion": "",
+            "ultima_conexion": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "historial": [],
             "favorito": {},
             "datos": {}
@@ -91,28 +92,6 @@ class Chati:
             else:
                 respuesta = "No tengo un historial de interacciones contigo."
 
-        elif "me gusta" in mensaje:
-            dato = mensaje.replace("me gusta ", "").strip()
-            jugador = self.obtener_jugador_actual()
-
-            if jugador:
-                jugador["datos"]["gustos"] = dato
-                self.guardar_memoria()
-                respuesta = f"¡Genial! He guardado que te gusta {dato}."
-            else:
-                respuesta = "Todavía no sé quién eres, no puedo guardar tus gustos."
-
-        elif "favorito es" in mensaje:
-            favorito = mensaje.replace("favorito es ", "").strip()
-            jugador = self.obtener_jugador_actual()
-
-            if jugador:
-                jugador["favorito"]["general"] = favorito
-                self.guardar_memoria()
-                respuesta = f"¡Genial! He guardado que tu favorito es {favorito}."
-            else:
-                respuesta = "Todavía no sé quién eres, no puedo guardar tu favorito."
-
         elif "me" in mensaje and ("gusta?" in mensaje or "gustan?" in mensaje):
             jugador = self.obtener_jugador_actual()
 
@@ -131,6 +110,44 @@ class Chati:
             else:
                 respuesta = "Todavía no sé quién eres, no puedo recordar tu favorito."
 
+        elif "gusta" in mensaje or "gustan" in mensaje:
+                jugador = self.obtener_jugador_actual()
+
+                if jugador:
+                    gustos = mensaje.replace("me gusta el ", "").replace("me gustan ", "").strip()
+                    partes = gustos.split()
+                    if partes[1] == "de":
+                        categoria = partes[0]
+                        valor = partes[2:]
+                    else:
+                        categoria = partes[0]
+                        valor = partes[1:]
+
+                    categoria = categoria.lower()
+                    valor = " ".join(valor)
+                    if categoria not in jugador["datos"]:
+                        jugador["datos"][categoria] = []
+                    jugador["datos"][categoria].append(valor)
+                    respuesta = f"¡Genial! He guardado que te gusta {valor}."
+                    self.guardar_memoria()
+                else:
+                    respuesta = "Todavía no sé quién eres, no puedo guardar tus gustos."
+                
+        elif "favorito es" in mensaje:
+            favorito = mensaje.replace("mi favorito es ", "").strip()
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                jugador["favorito"]["general"] = favorito
+                self.guardar_memoria()
+                respuesta = f"¡Genial! He guardado que tu favorito es {favorito}."
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo guardar tu favorito."
+
+        elif "recuerdo" in mensaje:
+            respuesta = self.recuerdo()
+
+
 
         else:
             respuesta = "No entendí lo que dijiste"
@@ -145,7 +162,11 @@ class Chati:
     def establecer_jugador_actual(self, nombre):
         if nombre in self.memoria.get("jugadores", {}):
             self.jugador_actual = nombre
+            actualizacion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.memoria["jugadores"][nombre]["ultima_conexion"] = actualizacion
+            self.guardar_memoria()
             return f"Jugador actual establecido a {nombre}"
+        
         else:
             return f"No se encontró el jugador {nombre} en la memoria."
 
@@ -188,3 +209,39 @@ class Chati:
         if self.jugador_actual:
             return self.memoria.get("jugadores", {}).get(self.jugador_actual)
         return None
+
+    def obtener_datos_jugador(self, nombre):
+        jugador = self.memoria.get("jugadores", {}).get(nombre)
+
+        if jugador:
+            return jugador["datos"]
+        return None
+
+    def recuerdo (self):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                gustos = jugador["datos"].get("gustos", "No has compartido tus gustos conmigo.")
+                favorito = jugador["favorito"].get("general", "No has compartido tu favorito conmigo.")
+                return f"Recuerdo que te gusta: {gustos} y tu favorito es: {favorito}"
+            else:
+                return "Todavía no sé quién eres, no puedo recordar tus gustos y favoritos."
+        else:
+            return "Todavía no sé quién eres, no puedo recordar tus gustos y favoritos."
+
+    def obtener_ultima_conexion(self):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                return jugador["ultima_conexion"]
+        return None
+
+    def registrar_desconexion(self):
+        if self.jugador_actual:
+            jugador = self.memoria.get("jugadores", {}).get(self.jugador_actual)
+
+            if jugador:
+                jugador["ultima_desconexion"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                self.guardar_memoria()
