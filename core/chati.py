@@ -245,3 +245,4 @@ class Chati:
             if jugador:
                 jugador["ultima_desconexion"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 self.guardar_memoria()
+        #para commits
