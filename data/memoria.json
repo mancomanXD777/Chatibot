@@ -1,5 +1,122 @@
 {
     "jugadores": {
-        
-    }
+        "esteban": {
+            "nombre": "esteban",
+            "ultima_conexion": "2026-08-14 22:30:45",
+            "historial": [
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "me gusta el juego de warframe",
+                    "respuesta": "¡Genial! He guardado que te gusta warframe."
+                },
+                {
+                    "mensaje": "c:\\users\\mauri\\appdata\\local\\microsoft\\windowsapps\\python3.13.exe c:/users/mauri/onedrive/desktop/prueba_server/chatibot/main.py",
+                    "respuesta": "No entendí lo que dijiste"
+                },
+                {
+                    "mensaje": "que juegos me gustan?",
+                    "respuesta": "Me dijiste que te gusta: No has compartido tus gustos conmigo."
+                },
+                {
+                    "mensaje": "que juegos me gustan?",
+                    "respuesta": "Me dijiste que te gusta: No has compartido tus gustos conmigo."
+                },
+                {
+                    "mensaje": "me gusta el juego minecraft",
+                    "respuesta": "¡Genial! He guardado que te gusta minecraft."
+                },
+                {
+                    "mensaje": "que juegos me gustan?",
+                    "respuesta": "Me dijiste que te gusta: No has compartido tus gustos conmigo."
+                },
+                {
+                    "mensaje": "c:\\users\\mauri\\appdata\\local\\microsoft\\windowsapps\\python3.13.exe c:/users/mauri/onedrive/desktop/prueba_server/chatibot/main.py",
+                    "respuesta": "No entendí lo que dijiste"
+                },
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "me gusta minecraft",
+                    "respuesta": "¡Genial! He guardado que te gusta gusta minecraft."
+                },
+                {
+                    "mensaje": "me gusta el juego de warfame",
+                    "respuesta": "¡Genial! He guardado que te gusta warfame."
+                },
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "que juegos me gustan?",
+                    "respuesta": "Todavía no me has dicho qué juegos te gustan."
+                },
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "que juegos me gustan?",
+                    "respuesta": "Me dijiste que te gustan los siguientes juegos: warframe, minecraft, warfame"
+                },
+                {
+                    "mensaje": "c:\\users\\mauri\\appdata\\local\\microsoft\\windowsapps\\python3.13.exe c:/users/mauri/onedrive/desktop/prueba_server/chatibot/main.py",
+                    "respuesta": "No entendí lo que dijiste"
+                },
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "me gustan las locas",
+                    "respuesta": "¡Genial! He guardado que te gusta locas."
+                },
+                {
+                    "mensaje": "me gustan las sopaipillas",
+                    "respuesta": "¡Genial! He guardado que te gusta sopaipillas."
+                },
+                {
+                    "mensaje": "me gustan los videojuegos",
+                    "respuesta": "¡Genial! He guardado que te gusta videojuegos."
+                },
+                {
+                    "mensaje": "que cosas me gustan?",
+                    "respuesta": "Todavía no me has dicho qué cosas te gustan."
+                },
+                {
+                    "mensaje": "que cosas me gustan?",
+                    "respuesta": "Todavía no me has dicho qué cosas te gustan."
+                },
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "que cosas me gustan",
+                    "respuesta": "Todavía no me has dicho qué cosas te gustan."
+                }
+            ],
+            "favorito": {},
+            "datos": {
+                "juego": [
+                    "warframe",
+                    "minecraft",
+                    "warfame"
+                ],
+                "las": [
+                    "locas",
+                    "sopaipillas"
+                ],
+                "los": [
+                    "videojuegos"
+                ]
+            },
+            "ultima_desconexion": "2026-08-14 22:30:25"
+        }
+    }   
 }

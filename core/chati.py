@@ -84,6 +84,32 @@ class Chati:
             else:
                 respuesta = "No tengo un historial de interacciones contigo."
 
+        elif "que juegos me gustan" in mensaje:
+            datos = self.obtener_datos_actuales()
+
+            if datos:
+                juegos = datos.get("juego", [])
+                if juegos:
+                    respuesta = f"Me dijiste que te gustan los siguientes juegos: {', '.join(juegos)}"
+
+                else:
+                    respuesta = "Todavía no me has dicho qué juegos te gustan."
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo recordar tus gustos."
+
+        elif "que cosas me gustan" in mensaje:
+            datos = self.obtener_datos_actuales()
+
+            if datos:
+                gustos = datos.get("gustos", [])
+                if gustos:
+                    respuesta = f"Me dijiste que te gustan las siguientes cosas: {', '.join(gustos)}"
+                else:
+                    respuesta = "Todavía no me has dicho qué cosas te gustan."
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo recordar tus gustos."
+
+
         elif "que fue lo primero que te dije" in mensaje:
             historial = self.obtener_historial()
             if historial:
@@ -110,11 +136,11 @@ class Chati:
             else:
                 respuesta = "Todavía no sé quién eres, no puedo recordar tu favorito."
 
-        elif "gusta" in mensaje or "gustan" in mensaje:
+        elif "gusta" in mensaje and "gustan" not in mensaje:
                 jugador = self.obtener_jugador_actual()
 
                 if jugador:
-                    gustos = mensaje.replace("me gusta el ", "").replace("me gustan ", "").strip()
+                    gustos = mensaje.replace("me gusta el ", "").strip()
                     partes = gustos.split()
                     if partes[1] == "de":
                         categoria = partes[0]
@@ -130,6 +156,23 @@ class Chati:
                     jugador["datos"][categoria].append(valor)
                     respuesta = f"¡Genial! He guardado que te gusta {valor}."
                     self.guardar_memoria()
+
+
+                elif "gustan" in mensaje and ("los" in mensaje or "las" in mensaje):
+                    jugador = self.obtener_jugador_actual()
+
+                    if jugador:
+                        gustos = mensaje.replace("me gustan los ", "").replace("me gustan las ", "").strip()
+
+                        if "gustos" not in jugador["datos"]:
+                            jugador["datos"]["gustos"] = []
+
+                        jugador["datos"]["gustos"].append(gustos)
+
+                        respuesta = f"¡Genial! He guardado que te gusta {gustos}."
+                    self.guardar_memoria()
+
+                    
                 else:
                     respuesta = "Todavía no sé quién eres, no puedo guardar tus gustos."
                 
@@ -146,8 +189,6 @@ class Chati:
 
         elif "recuerdo" in mensaje:
             respuesta = self.recuerdo()
-
-
 
         else:
             respuesta = "No entendí lo que dijiste"
@@ -245,3 +286,11 @@ class Chati:
             if jugador:
                 jugador["ultima_desconexion"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 self.guardar_memoria()
+
+    def obtener_datos_actuales(self):
+        jugador = self.obtener_jugador_actual()
+
+        if jugador:
+            return jugador["datos"]
+        
+        return None
