@@ -2,72 +2,8 @@
     "jugadores": {
         "esteban": {
             "nombre": "esteban",
-            "ultima_conexion": "2026-08-14 22:30:45",
+            "ultima_conexion": "2026-08-18 01:56:24",
             "historial": [
-                {
-                    "mensaje": "me llamo esteban",
-                    "respuesta": "Jugador actual establecido a esteban"
-                },
-                {
-                    "mensaje": "me gusta el juego de warframe",
-                    "respuesta": "¡Genial! He guardado que te gusta warframe."
-                },
-                {
-                    "mensaje": "c:\\users\\mauri\\appdata\\local\\microsoft\\windowsapps\\python3.13.exe c:/users/mauri/onedrive/desktop/prueba_server/chatibot/main.py",
-                    "respuesta": "No entendí lo que dijiste"
-                },
-                {
-                    "mensaje": "que juegos me gustan?",
-                    "respuesta": "Me dijiste que te gusta: No has compartido tus gustos conmigo."
-                },
-                {
-                    "mensaje": "que juegos me gustan?",
-                    "respuesta": "Me dijiste que te gusta: No has compartido tus gustos conmigo."
-                },
-                {
-                    "mensaje": "me gusta el juego minecraft",
-                    "respuesta": "¡Genial! He guardado que te gusta minecraft."
-                },
-                {
-                    "mensaje": "que juegos me gustan?",
-                    "respuesta": "Me dijiste que te gusta: No has compartido tus gustos conmigo."
-                },
-                {
-                    "mensaje": "c:\\users\\mauri\\appdata\\local\\microsoft\\windowsapps\\python3.13.exe c:/users/mauri/onedrive/desktop/prueba_server/chatibot/main.py",
-                    "respuesta": "No entendí lo que dijiste"
-                },
-                {
-                    "mensaje": "me llamo esteban",
-                    "respuesta": "Jugador actual establecido a esteban"
-                },
-                {
-                    "mensaje": "me gusta minecraft",
-                    "respuesta": "¡Genial! He guardado que te gusta gusta minecraft."
-                },
-                {
-                    "mensaje": "me gusta el juego de warfame",
-                    "respuesta": "¡Genial! He guardado que te gusta warfame."
-                },
-                {
-                    "mensaje": "me llamo esteban",
-                    "respuesta": "Jugador actual establecido a esteban"
-                },
-                {
-                    "mensaje": "que juegos me gustan?",
-                    "respuesta": "Todavía no me has dicho qué juegos te gustan."
-                },
-                {
-                    "mensaje": "me llamo esteban",
-                    "respuesta": "Jugador actual establecido a esteban"
-                },
-                {
-                    "mensaje": "que juegos me gustan?",
-                    "respuesta": "Me dijiste que te gustan los siguientes juegos: warframe, minecraft, warfame"
-                },
-                {
-                    "mensaje": "c:\\users\\mauri\\appdata\\local\\microsoft\\windowsapps\\python3.13.exe c:/users/mauri/onedrive/desktop/prueba_server/chatibot/main.py",
-                    "respuesta": "No entendí lo que dijiste"
-                },
                 {
                     "mensaje": "me llamo esteban",
                     "respuesta": "Jugador actual establecido a esteban"
@@ -85,38 +21,66 @@
                     "respuesta": "¡Genial! He guardado que te gusta videojuegos."
                 },
                 {
-                    "mensaje": "que cosas me gustan?",
-                    "respuesta": "Todavía no me has dicho qué cosas te gustan."
+                    "mensaje": "me gusta el juego de warframe",
+                    "respuesta": "¡Genial! He guardado que te gusta warframe."
                 },
                 {
-                    "mensaje": "que cosas me gustan?",
-                    "respuesta": "Todavía no me has dicho qué cosas te gustan."
+                    "mensaje": "me gusta el juego minecraft",
+                    "respuesta": "¡Genial! He guardado que te gusta minecraft."
+                },
+                {
+                    "mensaje": "mi color favorito es verde",
+                    "respuesta": "¡Genial! He guardado que tu color favorito es verde."
+                },
+                {
+                    "mensaje": "mi juego favorito es proyectzomboid",
+                    "respuesta": "¡Genial! He guardado que tu juego favorito es proyectzomboid."
+                },
+                {
+                    "mensaje": "que sabes de mi?",
+                    "respuesta": "Recuerdo que tu nombre es esteban. Tus gustos son: locas, sopaipillas, videojuegos."
+                },
+                {
+                    "mensaje": "",
+                    "respuesta": "No entendí lo que dijiste"
                 },
                 {
                     "mensaje": "me llamo esteban",
                     "respuesta": "Jugador actual establecido a esteban"
                 },
                 {
-                    "mensaje": "que cosas me gustan",
-                    "respuesta": "Todavía no me has dicho qué cosas te gustan."
+                    "mensaje": "que sabes de mi",
+                    "respuesta": "Recuerdo que tu nombre es esteban. Tus gustos son: locas, sopaipillas, videojuegos. Tu favorito es: verde, proyectzomboid."
+                },
+                {
+                    "mensaje": "me llamo esteban",
+                    "respuesta": "Jugador actual establecido a esteban"
+                },
+                {
+                    "mensaje": "cual es mi color favorito",
+                    "respuesta": "Tu color favorito es verde."
+                },
+                {
+                    "mensaje": "cual es mi juego favorito",
+                    "respuesta": "Tu juego favorito es proyectzomboid."
                 }
             ],
-            "favorito": {},
+            "favorito": {
+                "color": "verde",
+                "juego": "proyectzomboid"
+            },
             "datos": {
+                "gustos": [
+                    "locas",
+                    "sopaipillas",
+                    "videojuegos"
+                ],
                 "juego": [
                     "warframe",
-                    "minecraft",
-                    "warfame"
-                ],
-                "las": [
-                    "locas",
-                    "sopaipillas"
-                ],
-                "los": [
-                    "videojuegos"
+                    "minecraft"
                 ]
             },
-            "ultima_desconexion": "2026-08-14 22:30:25"
+            "ultima_desconexion": "2026-08-18 01:56:13"
         }
-    }   
+    }
 }

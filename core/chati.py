@@ -136,6 +136,44 @@ class Chati:
             else:
                 respuesta = "Todavía no sé quién eres, no puedo recordar tu favorito."
 
+        elif "que sabes de mi" in mensaje:
+            datos = self.obtener_resumen_jugador()
+
+            if datos:
+                nombre, gustos, favorito = datos
+
+                respuesta = f"Recuerdo que tu nombre es {nombre}."
+
+                if gustos:
+                        respuesta += f" Tus gustos son: {', '.join(gustos)}."
+                if favorito:
+                    favoritos_texto = []
+
+                    for categoria, valor in favorito.items():
+                        favoritos_texto.append(valor)
+
+                    respuesta += f" Tu favorito es: {', '.join(favoritos_texto)}."
+
+        elif "cual es mi" in mensaje and "favorito" in mensaje:
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                favorito = jugador.get("favorito", {})
+
+                partes = mensaje.split()
+                categoria = partes[3]
+
+                valor = favorito.get(categoria)
+
+                if valor:
+                    respuesta = f"Tu {categoria} favorito es el {valor}."
+                else:
+                    respuesta = f"Todavía no me has dicho cuál es tu {categoria} favorito."
+
+            else:
+                respuesta = "Todavía no sé quién eres, no puedo recordar tus gustos y favoritos."
+
+
         elif "gusta" in mensaje and "gustan" not in mensaje:
                 jugador = self.obtener_jugador_actual()
 
@@ -158,37 +196,45 @@ class Chati:
                     self.guardar_memoria()
 
 
-                elif "gustan" in mensaje and ("los" in mensaje or "las" in mensaje):
-                    jugador = self.obtener_jugador_actual()
-
-                    if jugador:
-                        gustos = mensaje.replace("me gustan los ", "").replace("me gustan las ", "").strip()
-
-                        if "gustos" not in jugador["datos"]:
-                            jugador["datos"]["gustos"] = []
-
-                        jugador["datos"]["gustos"].append(gustos)
-
-                        respuesta = f"¡Genial! He guardado que te gusta {gustos}."
-                    self.guardar_memoria()
-
+        elif "gustan" in mensaje and ("los" in mensaje or "las" in mensaje):
+            print("mensaje recibido")
                     
-                else:
-                    respuesta = "Todavía no sé quién eres, no puedo guardar tus gustos."
-                
-        elif "favorito es" in mensaje:
-            favorito = mensaje.replace("mi favorito es ", "").strip()
             jugador = self.obtener_jugador_actual()
 
             if jugador:
-                jugador["favorito"]["general"] = favorito
+                gustos = mensaje.replace("me gustan los ", "").replace("me gustan las ", "").strip()
+
+                if "gustos" not in jugador["datos"]:
+                    jugador["datos"]["gustos"] = []
+
+                jugador["datos"]["gustos"].append(gustos)
+
+                respuesta = f"¡Genial! He guardado que te gusta {gustos}."
                 self.guardar_memoria()
-                respuesta = f"¡Genial! He guardado que tu favorito es {favorito}."
+                                   
+        elif "favorito es" in mensaje:
+
+            jugador = self.obtener_jugador_actual()
+
+            if jugador:
+                favorito = mensaje.replace("mi ", "").strip()
+                partes = favorito.split()
+
+                categoria = partes[0]
+                valor = partes[3:]
+
+                if valor and valor[0] == "el":
+                    valor = valor[1:]
+
+                valor = " ".join(valor)
+
+                jugador["favorito"][categoria] = valor
+
+                respuesta = f"¡Genial! He guardado que tu {categoria} favorito es {valor}."
+                self.guardar_memoria()
+
             else:
                 respuesta = "Todavía no sé quién eres, no puedo guardar tu favorito."
-
-        elif "recuerdo" in mensaje:
-            respuesta = self.recuerdo()
 
         else:
             respuesta = "No entendí lo que dijiste"
@@ -293,4 +339,18 @@ class Chati:
         if jugador:
             return jugador["datos"]
         
+        return None
+
+    def obtener_resumen_jugador(self):
+        jugador = self.obtener_jugador_actual()
+
+        if jugador:
+            nombre = jugador["nombre"]
+            datos = jugador.get("datos", {})
+            favorito = jugador.get("favorito", {})
+
+            gustos = datos.get("gustos", [])
+
+            return nombre, gustos, favorito
+
         return None
